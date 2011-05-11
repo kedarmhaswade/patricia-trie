@@ -2,4 +2,8 @@
 bin
 build
 dist
-
+target
+*.iml
+*.iws
+*.ipr
+.idea
