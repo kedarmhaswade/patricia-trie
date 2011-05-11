@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import junit.framework.TestCase;
 
 import org.junit.Test;
+import static junit.framework.Assert.*;
 
 public class SerializationTest {
 
@@ -31,8 +32,8 @@ public class SerializationTest {
         Trie<String, String> trie2 = (Trie<String, String>)ois.readObject();
         ois.close();
         
-        TestCase.assertEquals(trie1.size(), trie2.size());
-        TestCase.assertEquals("World", trie2.get("Hello"));
+        assertEquals(trie1.size(), trie2.size());
+        assertEquals("World", trie2.get("Hello"));
     }
     
     @Test
@@ -54,7 +55,7 @@ public class SerializationTest {
         Trie<String, String> trie2 = (Trie<String, String>)ois.readObject();
         ois.close();
         
-        TestCase.assertEquals(1, trie1.prefixMap("Hello").size());
-        TestCase.assertEquals(1, trie2.prefixMap("Hello").size());
+        assertEquals(1, trie1.prefixMap("Hello").size());
+        assertEquals(1, trie2.prefixMap("Hello").size());
     }
 }

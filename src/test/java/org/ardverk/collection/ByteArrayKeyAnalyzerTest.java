@@ -8,6 +8,7 @@ import java.util.TreeMap;
 import junit.framework.TestCase;
 
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class ByteArrayKeyAnalyzerTest {
 
@@ -18,14 +19,14 @@ public class ByteArrayKeyAnalyzerTest {
         byte[] key = toByteArray("10100110", 2);
         ByteArrayKeyAnalyzer ka = ByteArrayKeyAnalyzer.create(key.length);
         
-        TestCase.assertTrue(ka.isBitSet(key, 0));
-        TestCase.assertFalse(ka.isBitSet(key, 1));
-        TestCase.assertTrue(ka.isBitSet(key, 2));
-        TestCase.assertFalse(ka.isBitSet(key, 3));
-        TestCase.assertFalse(ka.isBitSet(key, 4));
-        TestCase.assertTrue(ka.isBitSet(key, 5));
-        TestCase.assertTrue(ka.isBitSet(key, 6));
-        TestCase.assertFalse(ka.isBitSet(key, 7));
+        assertTrue(ka.isBitSet(key, 0));
+        assertFalse(ka.isBitSet(key, 1));
+        assertTrue(ka.isBitSet(key, 2));
+        assertFalse(ka.isBitSet(key, 3));
+        assertFalse(ka.isBitSet(key, 4));
+        assertTrue(ka.isBitSet(key, 5));
+        assertTrue(ka.isBitSet(key, 6));
+        assertFalse(ka.isBitSet(key, 7));
     }
     
     @Test
@@ -43,18 +44,18 @@ public class ByteArrayKeyAnalyzerTest {
             byte[] key = toByteArray(value);
             
             BigInteger existing = trie.put(key, value);
-            TestCase.assertNull(existing);
+            assertNull(existing);
             
             map.put(key, value);
         }
         
-        TestCase.assertEquals(map.size(), trie.size());
+        assertEquals(map.size(), trie.size());
         
         for (byte[] key : map.keySet()) {
             BigInteger expected = new BigInteger(1, key);
             BigInteger value = trie.get(key);
             
-            TestCase.assertEquals(expected, value);
+            assertEquals(expected, value);
         }
     }
     
@@ -104,13 +105,13 @@ public class ByteArrayKeyAnalyzerTest {
             trie2.put(key, value);
         }
         
-        TestCase.assertEquals("Anna", trie1.selectValue("An"));
-        TestCase.assertEquals("Anna", trie2.selectValue("An".getBytes()));
+        assertEquals("Anna", trie1.selectValue("An"));
+        assertEquals("Anna", trie2.selectValue("An".getBytes()));
         
-        TestCase.assertEquals("Anna-Marie", trie1.selectValue("Anna-"));
-        TestCase.assertEquals("Anna-Marie", trie2.selectValue("Anna-".getBytes()));
+        assertEquals("Anna-Marie", trie1.selectValue("Anna-"));
+        assertEquals("Anna-Marie", trie2.selectValue("Anna-".getBytes()));
         
-        TestCase.assertEquals("World", trie1.selectValue("x"));
-        TestCase.assertEquals("World", trie2.selectValue("x".getBytes()));
+        assertEquals("World", trie1.selectValue("x"));
+        assertEquals("World", trie2.selectValue("x".getBytes()));
     }
 }

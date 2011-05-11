@@ -33,34 +33,35 @@ import java.util.SortedMap;
 import java.util.StringTokenizer;
 import java.util.TreeMap;
 
-import junit.framework.TestCase;
+import static junit.framework.TestCase.*;
 
 import org.junit.Test;
+
 
 public class PatriciaTrieTest {
     
     @Test
     public void testSimple() {
         PatriciaTrie<Integer, String> intTrie = new PatriciaTrie<Integer, String>(IntegerKeyAnalyzer.INSTANCE);
-        TestCase.assertTrue(intTrie.isEmpty());
-        TestCase.assertEquals(0, intTrie.size());
+        assertTrue(intTrie.isEmpty());
+        assertEquals(0, intTrie.size());
         
         intTrie.put(1, "One");
-        TestCase.assertFalse(intTrie.isEmpty());
-        TestCase.assertEquals(1, intTrie.size());
+        assertFalse(intTrie.isEmpty());
+        assertEquals(1, intTrie.size());
         
-        TestCase.assertEquals("One", intTrie.remove(1));
-        TestCase.assertNull(intTrie.remove(1));
-        TestCase.assertTrue(intTrie.isEmpty());
-        TestCase.assertEquals(0, intTrie.size());
+        assertEquals("One", intTrie.remove(1));
+        assertNull(intTrie.remove(1));
+        assertTrue(intTrie.isEmpty());
+        assertEquals(0, intTrie.size());
         
         intTrie.put(1, "One");
-        TestCase.assertEquals("One", intTrie.get(1));
-        TestCase.assertEquals("One", intTrie.put(1, "NotOne"));
-        TestCase.assertEquals(1, intTrie.size());
-        TestCase.assertEquals("NotOne", intTrie.get(1));
-        TestCase.assertEquals("NotOne", intTrie.remove(1));
-        TestCase.assertNull(intTrie.put(1, "One"));
+        assertEquals("One", intTrie.get(1));
+        assertEquals("One", intTrie.put(1, "NotOne"));
+        assertEquals(1, intTrie.size());
+        assertEquals("NotOne", intTrie.get(1));
+        assertEquals("NotOne", intTrie.remove(1));
+        assertNull(intTrie.put(1, "One"));
     }
     
     @Test
@@ -105,9 +106,9 @@ public class PatriciaTrieTest {
         
         for(int i = 0; i < results.length; i++) {
             Map.Entry<Character, String> found = charTrie.ceilingEntry((Character)results[i]);
-            TestCase.assertNotNull(found);
-            TestCase.assertEquals(results[i], found.getKey());
-            TestCase.assertEquals(results[++i], found.getValue());
+            assertNotNull(found);
+            assertEquals(results[i], found.getKey());
+            assertEquals(results[++i], found.getValue());
         }
         
         // Remove some & try again...
@@ -120,40 +121,40 @@ public class PatriciaTrieTest {
         charTrie.remove('u');
         
         Map.Entry<Character, String> found = charTrie.ceilingEntry('u');
-        TestCase.assertNotNull(found);
-        TestCase.assertEquals((Character)'v', found.getKey());
+        assertNotNull(found);
+        assertEquals((Character)'v', found.getKey());
         
         found = charTrie.ceilingEntry('a');
-        TestCase.assertNotNull(found);
-        TestCase.assertEquals((Character)'b', found.getKey());
+        assertNotNull(found);
+        assertEquals((Character)'b', found.getKey());
         
         found = charTrie.ceilingEntry('z');
-        TestCase.assertNull(found);
+        assertNull(found);
         
         found = charTrie.ceilingEntry('q');
-        TestCase.assertNotNull(found);
-        TestCase.assertEquals((Character)'r', found.getKey());
+        assertNotNull(found);
+        assertEquals((Character)'r', found.getKey());
         
         found = charTrie.ceilingEntry('l');
-        TestCase.assertNotNull(found);
-        TestCase.assertEquals((Character)'n', found.getKey());
+        assertNotNull(found);
+        assertEquals((Character)'n', found.getKey());
         
         found = charTrie.ceilingEntry('p');
-        TestCase.assertNotNull(found);
-        TestCase.assertEquals((Character)'r', found.getKey());
+        assertNotNull(found);
+        assertEquals((Character)'r', found.getKey());
         
         found = charTrie.ceilingEntry('m');
-        TestCase.assertNotNull(found);
-        TestCase.assertEquals((Character)'n', found.getKey());
+        assertNotNull(found);
+        assertEquals((Character)'n', found.getKey());
         
         found = charTrie.ceilingEntry('\0');
-        TestCase.assertNotNull(found);
-        TestCase.assertEquals((Character)'b', found.getKey());
+        assertNotNull(found);
+        assertEquals((Character)'b', found.getKey());
         
         charTrie.put('\0', "");
         found = charTrie.ceilingEntry('\0');
-        TestCase.assertNotNull(found);
-        TestCase.assertEquals((Character)'\0', found.getKey());      
+        assertNotNull(found);
+        assertEquals((Character)'\0', found.getKey());
     }
     
     @Test
@@ -199,17 +200,17 @@ public class PatriciaTrieTest {
             //System.out.println("Looking for: " + results[i]);
             Map.Entry<Character, String> found = charTrie.lowerEntry((Character)results[i]);
             if(i == 0) {
-                TestCase.assertNull(found);
+                assertNull(found);
             } else {
-                TestCase.assertNotNull(found);
-                TestCase.assertEquals(results[i-2], found.getKey());
-                TestCase.assertEquals(results[i-1], found.getValue());
+                assertNotNull(found);
+                assertEquals(results[i-2], found.getKey());
+                assertEquals(results[i-1], found.getValue());
             }
         }
 
         Map.Entry<Character, String> found = charTrie.lowerEntry((char)('z' + 1));
-        TestCase.assertNotNull(found);
-        TestCase.assertEquals((Character)'z', found.getKey());
+        assertNotNull(found);
+        assertEquals((Character)'z', found.getKey());
         
         
         // Remove some & try again...
@@ -222,50 +223,50 @@ public class PatriciaTrieTest {
         charTrie.remove('u');
         
         found = charTrie.lowerEntry('u');
-        TestCase.assertNotNull(found);
-        TestCase.assertEquals((Character)'t', found.getKey());
+        assertNotNull(found);
+        assertEquals((Character)'t', found.getKey());
         
         found = charTrie.lowerEntry('v');
-        TestCase.assertNotNull(found);
-        TestCase.assertEquals((Character)'t', found.getKey());
+        assertNotNull(found);
+        assertEquals((Character)'t', found.getKey());
         
         found = charTrie.lowerEntry('a');
-        TestCase.assertNull(found);
+        assertNull(found);
         
         found = charTrie.lowerEntry('z');
-        TestCase.assertNotNull(found);
-        TestCase.assertEquals((Character)'y', found.getKey());
+        assertNotNull(found);
+        assertEquals((Character)'y', found.getKey());
         
         found = charTrie.lowerEntry((char)('z'+1));
-        TestCase.assertNotNull(found);
-        TestCase.assertEquals((Character)'y', found.getKey());
+        assertNotNull(found);
+        assertEquals((Character)'y', found.getKey());
         
         found = charTrie.lowerEntry('q');
-        TestCase.assertNotNull(found);
-        TestCase.assertEquals((Character)'o', found.getKey());
+        assertNotNull(found);
+        assertEquals((Character)'o', found.getKey());
         
         found = charTrie.lowerEntry('r');
-        TestCase.assertNotNull(found);
-        TestCase.assertEquals((Character)'o', found.getKey());
+        assertNotNull(found);
+        assertEquals((Character)'o', found.getKey());
         
         found = charTrie.lowerEntry('p');
-        TestCase.assertNotNull(found);
-        TestCase.assertEquals((Character)'o', found.getKey());
+        assertNotNull(found);
+        assertEquals((Character)'o', found.getKey());
         
         found = charTrie.lowerEntry('l');
-        TestCase.assertNotNull(found);
-        TestCase.assertEquals((Character)'k', found.getKey());
+        assertNotNull(found);
+        assertEquals((Character)'k', found.getKey());
         
         found = charTrie.lowerEntry('m');
-        TestCase.assertNotNull(found);
-        TestCase.assertEquals((Character)'k', found.getKey());
+        assertNotNull(found);
+        assertEquals((Character)'k', found.getKey());
         
         found = charTrie.lowerEntry('\0');
-        TestCase.assertNull(found);
+        assertNull(found);
         
         charTrie.put('\0', "");
         found = charTrie.lowerEntry('\0');
-        TestCase.assertNull(found);      
+        assertNull(found);
     }
     
     @Test
@@ -396,7 +397,7 @@ public class PatriciaTrieTest {
                 'p', "p", 'q', "q", 'r', "r", 's', "s", 
                 'x', "x", 'y', "y", 'z', "z");
                 
-        TestCase.assertEquals(26, charTrie.size());
+        assertEquals(26, charTrie.size());
         
         cursor.starting();
         charTrie.select('d', cursor);
@@ -446,7 +447,7 @@ public class PatriciaTrieTest {
         // Test removing both an internal & external node.
         // 'm' is an example External node in this Trie, and 'p' is an internal.
         
-        TestCase.assertEquals(26, charTrie.size());
+        assertEquals(26, charTrie.size());
         
         Object[] toRemove = new Object[] { 'g', 'd', 'e', 'm', 'p', 'q', 'r', 's' };
         cursor.addToRemove(toRemove);
@@ -455,7 +456,7 @@ public class PatriciaTrieTest {
         charTrie.traverse(cursor);
         cursor.finished();
             
-        TestCase.assertEquals(26 - toRemove.length, charTrie.size());
+        assertEquals(26 - toRemove.length, charTrie.size());
 
         cursor.starting();
         charTrie.traverse(cursor);
@@ -465,7 +466,7 @@ public class PatriciaTrieTest {
         for (Entry<Character, String> entry : charTrie.entrySet()) {
             cursor.select(entry);
             if (Arrays.asList(toRemove).contains(entry.getKey())) {
-                TestCase.fail("got an: " + entry);
+                fail("got an: " + entry);
             }
         }
         cursor.finished();
@@ -510,7 +511,7 @@ public class PatriciaTrieTest {
         // Test removing both an internal & external node.
         // 'm' is an example External node in this Trie, and 'p' is an internal.
         
-        TestCase.assertEquals(26, charTrie.size());
+        assertEquals(26, charTrie.size());
         
         Object[] toRemove = new Object[] { 'e', 'm', 'p', 'q', 'r', 's' };
         
@@ -523,7 +524,7 @@ public class PatriciaTrieTest {
         }
         cursor.finished();
             
-        TestCase.assertEquals(26 - toRemove.length, charTrie.size());
+        assertEquals(26 - toRemove.length, charTrie.size());
         
         cursor.remove(toRemove);
 
@@ -531,7 +532,7 @@ public class PatriciaTrieTest {
         for (Entry<Character, String> entry : charTrie.entrySet()) {
             cursor.select(entry);
             if (Arrays.asList(toRemove).contains(entry.getKey())) {
-                TestCase.fail("got an: " + entry);
+                fail("got an: " + entry);
             }
         }
         cursor.finished();
@@ -560,11 +561,11 @@ public class PatriciaTrieTest {
         }
         control.addAll(sortedControl.values());
 
-        TestCase.assertEquals(control.size(), sortedControl.size());
-        TestCase.assertEquals(sortedControl.size(), trie.size());
+        assertEquals(control.size(), sortedControl.size());
+        assertEquals(sortedControl.size(), trie.size());
         Iterator<String> iter = trie.values().iterator();
         for (String aControl : control) {
-            TestCase.assertEquals(aControl, iter.next());
+            assertEquals(aControl, iter.next());
         }
         
         Random rnd = new Random();
@@ -572,16 +573,16 @@ public class PatriciaTrieTest {
         iter = trie.values().iterator();
         int removed = 0;
         for(; item < control.size(); item++) {
-            TestCase.assertEquals(control.get(item), iter.next());
+            assertEquals(control.get(item), iter.next());
             if(rnd.nextBoolean()) {
                 iter.remove();
                 removed++;
             }
         }
         
-        TestCase.assertEquals(control.size(), item);
-        TestCase.assertTrue(removed > 0);
-        TestCase.assertEquals(control.size(), trie.size() + removed);
+        assertEquals(control.size(), item);
+        assertTrue(removed > 0);
+        assertEquals(control.size(), trie.size() + removed);
         
         // reset hamlet
         trie.clear();
@@ -593,56 +594,56 @@ public class PatriciaTrieTest {
         assertEqualArrays(sortedControl.keySet().toArray(), trie.keySet().toArray());
         assertEqualArrays(sortedControl.entrySet().toArray(), trie.entrySet().toArray());
         
-        TestCase.assertEquals(sortedControl.firstKey(), trie.firstKey());
-        TestCase.assertEquals(sortedControl.lastKey(), trie.lastKey());
+        assertEquals(sortedControl.firstKey(), trie.firstKey());
+        assertEquals(sortedControl.lastKey(), trie.lastKey());
         
         SortedMap<String, String> sub = trie.headMap(control.get(523));
-        TestCase.assertEquals(523, sub.size());
+        assertEquals(523, sub.size());
         for(int i = 0; i < control.size(); i++) {
             if(i < 523)
-                TestCase.assertTrue(sub.containsKey(control.get(i)));
+                assertTrue(sub.containsKey(control.get(i)));
             else
-                TestCase.assertFalse(sub.containsKey(control.get(i)));
+                assertFalse(sub.containsKey(control.get(i)));
         }
         // Too slow to check values on all, so just do a few.
-        TestCase.assertTrue(sub.containsValue(control.get(522)));
-        TestCase.assertFalse(sub.containsValue(control.get(523)));
-        TestCase.assertFalse(sub.containsValue(control.get(524)));
+        assertTrue(sub.containsValue(control.get(522)));
+        assertFalse(sub.containsValue(control.get(523)));
+        assertFalse(sub.containsValue(control.get(524)));
         
         try {
             sub.headMap(control.get(524));
-            TestCase.fail("should have thrown IAE");
+            fail("should have thrown IAE");
         } catch(IllegalArgumentException expected) {}
         
-        TestCase.assertEquals(sub.lastKey(), control.get(522));
-        TestCase.assertEquals(sub.firstKey(), control.get(0));
+        assertEquals(sub.lastKey(), control.get(522));
+        assertEquals(sub.firstKey(), control.get(0));
         
         sub = sub.tailMap(control.get(234));
-        TestCase.assertEquals(289, sub.size());
-        TestCase.assertEquals(control.get(234), sub.firstKey());
-        TestCase.assertEquals(control.get(522), sub.lastKey());
+        assertEquals(289, sub.size());
+        assertEquals(control.get(234), sub.firstKey());
+        assertEquals(control.get(522), sub.lastKey());
         for(int i = 0; i < control.size(); i++) {
             if(i < 523 && i > 233)
-                TestCase.assertTrue(sub.containsKey(control.get(i)));
+                assertTrue(sub.containsKey(control.get(i)));
             else
-                TestCase.assertFalse(sub.containsKey(control.get(i)));
+                assertFalse(sub.containsKey(control.get(i)));
         }
 
         try {
             sub.tailMap(control.get(232));
-            TestCase.fail("should have thrown IAE");
+            fail("should have thrown IAE");
         } catch(IllegalArgumentException expected) {}
         
         sub = sub.subMap(control.get(300), control.get(400));
-        TestCase.assertEquals(100, sub.size());
-        TestCase.assertEquals(control.get(300), sub.firstKey());
-        TestCase.assertEquals(control.get(399), sub.lastKey());
+        assertEquals(100, sub.size());
+        assertEquals(control.get(300), sub.firstKey());
+        assertEquals(control.get(399), sub.lastKey());
         
         for(int i = 0; i < control.size(); i++) {
             if(i < 400 && i > 299)
-                TestCase.assertTrue(sub.containsKey(control.get(i)));
+                assertTrue(sub.containsKey(control.get(i)));
             else
-                TestCase.assertFalse(sub.containsKey(control.get(i)));
+                assertFalse(sub.containsKey(control.get(i)));
         }
     }
     
@@ -669,210 +670,210 @@ public class PatriciaTrieTest {
         Map.Entry<String, String> entry;
         
         map = trie.prefixMap("Al");
-        TestCase.assertEquals(8, map.size());
-        TestCase.assertEquals("Alabama", map.firstKey());
-        TestCase.assertEquals("Alliese", map.lastKey());
-        TestCase.assertEquals("Albertoo", map.get("Albertoo"));
-        TestCase.assertNotNull(trie.get("Xavier"));
-        TestCase.assertNull(map.get("Xavier"));
-        TestCase.assertNull(trie.get("Alice"));
-        TestCase.assertNull(map.get("Alice"));
+        assertEquals(8, map.size());
+        assertEquals("Alabama", map.firstKey());
+        assertEquals("Alliese", map.lastKey());
+        assertEquals("Albertoo", map.get("Albertoo"));
+        assertNotNull(trie.get("Xavier"));
+        assertNull(map.get("Xavier"));
+        assertNull(trie.get("Alice"));
+        assertNull(map.get("Alice"));
         iterator = map.values().iterator();
-        TestCase.assertEquals("Alabama", iterator.next());
-        TestCase.assertEquals("Albert", iterator.next());
-        TestCase.assertEquals("Alberto", iterator.next());
-        TestCase.assertEquals("Albertoo", iterator.next());
-        TestCase.assertEquals("Alberts", iterator.next());
-        TestCase.assertEquals("Alien", iterator.next());
-        TestCase.assertEquals("Allie", iterator.next());
-        TestCase.assertEquals("Alliese", iterator.next());
-        TestCase.assertFalse(iterator.hasNext());
+        assertEquals("Alabama", iterator.next());
+        assertEquals("Albert", iterator.next());
+        assertEquals("Alberto", iterator.next());
+        assertEquals("Albertoo", iterator.next());
+        assertEquals("Alberts", iterator.next());
+        assertEquals("Alien", iterator.next());
+        assertEquals("Allie", iterator.next());
+        assertEquals("Alliese", iterator.next());
+        assertFalse(iterator.hasNext());
         
         map = trie.prefixMap("Albert");
         iterator = map.keySet().iterator();
-        TestCase.assertEquals("Albert", iterator.next());
-        TestCase.assertEquals("Alberto", iterator.next());
-        TestCase.assertEquals("Albertoo", iterator.next());
-        TestCase.assertEquals("Alberts", iterator.next());
-        TestCase.assertFalse(iterator.hasNext());
-        TestCase.assertEquals(4, map.size());
-        TestCase.assertEquals("Albert", map.firstKey());
-        TestCase.assertEquals("Alberts", map.lastKey());
-        TestCase.assertNull(trie.get("Albertz"));
+        assertEquals("Albert", iterator.next());
+        assertEquals("Alberto", iterator.next());
+        assertEquals("Albertoo", iterator.next());
+        assertEquals("Alberts", iterator.next());
+        assertFalse(iterator.hasNext());
+        assertEquals(4, map.size());
+        assertEquals("Albert", map.firstKey());
+        assertEquals("Alberts", map.lastKey());
+        assertNull(trie.get("Albertz"));
         map.put("Albertz", "Albertz");
-        TestCase.assertEquals("Albertz", trie.get("Albertz"));
-        TestCase.assertEquals(5, map.size());
-        TestCase.assertEquals("Albertz", map.lastKey());
+        assertEquals("Albertz", trie.get("Albertz"));
+        assertEquals(5, map.size());
+        assertEquals("Albertz", map.lastKey());
         iterator = map.keySet().iterator();
-        TestCase.assertEquals("Albert", iterator.next());
-        TestCase.assertEquals("Alberto", iterator.next());
-        TestCase.assertEquals("Albertoo", iterator.next());
-        TestCase.assertEquals("Alberts", iterator.next());
-        TestCase.assertEquals("Albertz", iterator.next());
-        TestCase.assertFalse(iterator.hasNext());
-        TestCase.assertEquals("Albertz", map.remove("Albertz"));
+        assertEquals("Albert", iterator.next());
+        assertEquals("Alberto", iterator.next());
+        assertEquals("Albertoo", iterator.next());
+        assertEquals("Alberts", iterator.next());
+        assertEquals("Albertz", iterator.next());
+        assertFalse(iterator.hasNext());
+        assertEquals("Albertz", map.remove("Albertz"));
         
         map = trie.prefixMap("Alberto");
-        TestCase.assertEquals(2, map.size());
-        TestCase.assertEquals("Alberto", map.firstKey());
-        TestCase.assertEquals("Albertoo", map.lastKey());
+        assertEquals(2, map.size());
+        assertEquals("Alberto", map.firstKey());
+        assertEquals("Albertoo", map.lastKey());
         entryIterator = map.entrySet().iterator();
         entry = entryIterator.next();
-        TestCase.assertEquals("Alberto", entry.getKey());
-        TestCase.assertEquals("Alberto", entry.getValue());
+        assertEquals("Alberto", entry.getKey());
+        assertEquals("Alberto", entry.getValue());
         entry = entryIterator.next();
-        TestCase.assertEquals("Albertoo", entry.getKey());
-        TestCase.assertEquals("Albertoo", entry.getValue());
-        TestCase.assertFalse(entryIterator.hasNext());
+        assertEquals("Albertoo", entry.getKey());
+        assertEquals("Albertoo", entry.getValue());
+        assertFalse(entryIterator.hasNext());
         trie.put("Albertoad", "Albertoad");
-        TestCase.assertEquals(3, map.size());
-        TestCase.assertEquals("Alberto", map.firstKey());
-        TestCase.assertEquals("Albertoo", map.lastKey());
+        assertEquals(3, map.size());
+        assertEquals("Alberto", map.firstKey());
+        assertEquals("Albertoo", map.lastKey());
         entryIterator = map.entrySet().iterator();
         entry = entryIterator.next();
-        TestCase.assertEquals("Alberto", entry.getKey());
-        TestCase.assertEquals("Alberto", entry.getValue());
+        assertEquals("Alberto", entry.getKey());
+        assertEquals("Alberto", entry.getValue());
         entry = entryIterator.next();
-        TestCase.assertEquals("Albertoad", entry.getKey());
-        TestCase.assertEquals("Albertoad", entry.getValue());
+        assertEquals("Albertoad", entry.getKey());
+        assertEquals("Albertoad", entry.getValue());
         entry = entryIterator.next();
-        TestCase.assertEquals("Albertoo", entry.getKey());
-        TestCase.assertEquals("Albertoo", entry.getValue());
-        TestCase.assertFalse(entryIterator.hasNext());
-        TestCase.assertEquals("Albertoo", trie.remove("Albertoo"));
-        TestCase.assertEquals("Alberto", map.firstKey());
-        TestCase.assertEquals("Albertoad", map.lastKey());
-        TestCase.assertEquals(2, map.size());
+        assertEquals("Albertoo", entry.getKey());
+        assertEquals("Albertoo", entry.getValue());
+        assertFalse(entryIterator.hasNext());
+        assertEquals("Albertoo", trie.remove("Albertoo"));
+        assertEquals("Alberto", map.firstKey());
+        assertEquals("Albertoad", map.lastKey());
+        assertEquals(2, map.size());
         entryIterator = map.entrySet().iterator();
         entry = entryIterator.next();
-        TestCase.assertEquals("Alberto", entry.getKey());
-        TestCase.assertEquals("Alberto", entry.getValue());
+        assertEquals("Alberto", entry.getKey());
+        assertEquals("Alberto", entry.getValue());
         entry = entryIterator.next();
-        TestCase.assertEquals("Albertoad", entry.getKey());
-        TestCase.assertEquals("Albertoad", entry.getValue());
-        TestCase.assertFalse(entryIterator.hasNext());
-        TestCase.assertEquals("Albertoad", trie.remove("Albertoad"));
+        assertEquals("Albertoad", entry.getKey());
+        assertEquals("Albertoad", entry.getValue());
+        assertFalse(entryIterator.hasNext());
+        assertEquals("Albertoad", trie.remove("Albertoad"));
         trie.put("Albertoo", "Albertoo");
         
         map = trie.prefixMap("X");
-        TestCase.assertEquals(2, map.size());
-        TestCase.assertFalse(map.containsKey("Albert"));
-        TestCase.assertTrue(map.containsKey("Xavier"));
-        TestCase.assertFalse(map.containsKey("Xalan"));
+        assertEquals(2, map.size());
+        assertFalse(map.containsKey("Albert"));
+        assertTrue(map.containsKey("Xavier"));
+        assertFalse(map.containsKey("Xalan"));
         iterator = map.values().iterator();
-        TestCase.assertEquals("Xavier", iterator.next());
-        TestCase.assertEquals("XyZ", iterator.next());
-        TestCase.assertFalse(iterator.hasNext());
+        assertEquals("Xavier", iterator.next());
+        assertEquals("XyZ", iterator.next());
+        assertFalse(iterator.hasNext());
         
         map = trie.prefixMap("An");
-        TestCase.assertEquals(1, map.size());
-        TestCase.assertEquals("Anna", map.firstKey());
-        TestCase.assertEquals("Anna", map.lastKey());
+        assertEquals(1, map.size());
+        assertEquals("Anna", map.firstKey());
+        assertEquals("Anna", map.lastKey());
         iterator = map.keySet().iterator();
-        TestCase.assertEquals("Anna", iterator.next());
-        TestCase.assertFalse(iterator.hasNext());
+        assertEquals("Anna", iterator.next());
+        assertFalse(iterator.hasNext());
         
         map = trie.prefixMap("Ban");
-        TestCase.assertEquals(1, map.size());
-        TestCase.assertEquals("Banane", map.firstKey());
-        TestCase.assertEquals("Banane", map.lastKey());
+        assertEquals(1, map.size());
+        assertEquals("Banane", map.firstKey());
+        assertEquals("Banane", map.lastKey());
         iterator = map.keySet().iterator();
-        TestCase.assertEquals("Banane", iterator.next());
-        TestCase.assertFalse(iterator.hasNext());
+        assertEquals("Banane", iterator.next());
+        assertFalse(iterator.hasNext());
         
         map = trie.prefixMap("Am");
-        TestCase.assertFalse(map.isEmpty());
-        TestCase.assertEquals(3, map.size());
-        TestCase.assertEquals("Amber", trie.remove("Amber"));
+        assertFalse(map.isEmpty());
+        assertEquals(3, map.size());
+        assertEquals("Amber", trie.remove("Amber"));
         iterator = map.keySet().iterator();
-        TestCase.assertEquals("Amma", iterator.next());
-        TestCase.assertEquals("Ammun", iterator.next());
-        TestCase.assertFalse(iterator.hasNext());
+        assertEquals("Amma", iterator.next());
+        assertEquals("Ammun", iterator.next());
+        assertFalse(iterator.hasNext());
         iterator = map.keySet().iterator();
         map.put("Amber", "Amber");
-        TestCase.assertEquals(3, map.size());
+        assertEquals(3, map.size());
         try {
             iterator.next();
-            TestCase.fail("CME expected");
+            fail("CME expected");
         } catch(ConcurrentModificationException expected) {}
-        TestCase.assertEquals("Amber", map.firstKey());
-        TestCase.assertEquals("Ammun", map.lastKey());
+        assertEquals("Amber", map.firstKey());
+        assertEquals("Ammun", map.lastKey());
         
         map = trie.prefixMap("Ak\0");
-        TestCase.assertTrue(map.isEmpty());
+        assertTrue(map.isEmpty());
         
         map = trie.prefixMap("Ak");
-        TestCase.assertEquals(2, map.size());
-        TestCase.assertEquals("Akka", map.firstKey());
-        TestCase.assertEquals("Akko", map.lastKey());
+        assertEquals(2, map.size());
+        assertEquals("Akka", map.firstKey());
+        assertEquals("Akko", map.lastKey());
         map.put("Ak", "Ak");
-        TestCase.assertEquals("Ak", map.firstKey());
-        TestCase.assertEquals("Akko", map.lastKey());
-        TestCase.assertEquals(3, map.size());
+        assertEquals("Ak", map.firstKey());
+        assertEquals("Akko", map.lastKey());
+        assertEquals(3, map.size());
         trie.put("Al", "Al");
-        TestCase.assertEquals(3, map.size());
-        TestCase.assertEquals("Ak", map.remove("Ak"));
-        TestCase.assertEquals("Akka", map.firstKey());
-        TestCase.assertEquals("Akko", map.lastKey());
-        TestCase.assertEquals(2, map.size());
+        assertEquals(3, map.size());
+        assertEquals("Ak", map.remove("Ak"));
+        assertEquals("Akka", map.firstKey());
+        assertEquals("Akko", map.lastKey());
+        assertEquals(2, map.size());
         iterator = map.keySet().iterator();
-        TestCase.assertEquals("Akka", iterator.next());
-        TestCase.assertEquals("Akko", iterator.next());
-        TestCase.assertFalse(iterator.hasNext());
-        TestCase.assertEquals("Al", trie.remove("Al"));
+        assertEquals("Akka", iterator.next());
+        assertEquals("Akko", iterator.next());
+        assertFalse(iterator.hasNext());
+        assertEquals("Al", trie.remove("Al"));
         
         map = trie.prefixMap("Akka");
-        TestCase.assertEquals(1, map.size());
-        TestCase.assertEquals("Akka", map.firstKey());
-        TestCase.assertEquals("Akka", map.lastKey());
+        assertEquals(1, map.size());
+        assertEquals("Akka", map.firstKey());
+        assertEquals("Akka", map.lastKey());
         iterator = map.keySet().iterator();
-        TestCase.assertEquals("Akka", iterator.next());
-        TestCase.assertFalse(iterator.hasNext());
+        assertEquals("Akka", iterator.next());
+        assertFalse(iterator.hasNext());
         
         map = trie.prefixMap("Ab");
-        TestCase.assertTrue(map.isEmpty());
-        TestCase.assertEquals(0, map.size());
+        assertTrue(map.isEmpty());
+        assertEquals(0, map.size());
         try {
             Object o = map.firstKey();
-            TestCase.fail("got a first key: " + o);
+            fail("got a first key: " + o);
         } catch(NoSuchElementException nsee) {}
         try {
             Object o = map.lastKey();
-            TestCase.fail("got a last key: " + o);
+            fail("got a last key: " + o);
         } catch(NoSuchElementException nsee) {}
         iterator = map.values().iterator();
-        TestCase.assertFalse(iterator.hasNext());
+        assertFalse(iterator.hasNext());
         
         map = trie.prefixMap("Albertooo");
-        TestCase.assertTrue(map.isEmpty());
-        TestCase.assertEquals(0, map.size());
+        assertTrue(map.isEmpty());
+        assertEquals(0, map.size());
         try {
             Object o = map.firstKey();
-            TestCase.fail("got a first key: " + o);
+            fail("got a first key: " + o);
         } catch(NoSuchElementException nsee) {}
         try {
             Object o = map.lastKey();
-            TestCase.fail("got a last key: " + o);
+            fail("got a last key: " + o);
         } catch(NoSuchElementException nsee) {}
         iterator = map.values().iterator();
-        TestCase.assertFalse(iterator.hasNext());
+        assertFalse(iterator.hasNext());
         
         map = trie.prefixMap("");
-        TestCase.assertSame(trie, map); // stricter than necessary, but a good check
+        assertSame(trie, map); // stricter than necessary, but a good check
         
         map = trie.prefixMap("\0");
-        TestCase.assertTrue(map.isEmpty());
-        TestCase.assertEquals(0, map.size());
+        assertTrue(map.isEmpty());
+        assertEquals(0, map.size());
         try {
             Object o = map.firstKey();
-            TestCase.fail("got a first key: " + o);
+            fail("got a first key: " + o);
         } catch(NoSuchElementException nsee) {}
         try {
             Object o = map.lastKey();
-            TestCase.fail("got a last key: " + o);
+            fail("got a last key: " + o);
         } catch(NoSuchElementException nsee) {}
         iterator = map.values().iterator();
-        TestCase.assertFalse(iterator.hasNext());
+        assertFalse(iterator.hasNext());
     }
     
     @Test
@@ -892,30 +893,30 @@ public class PatriciaTrieTest {
         }
         
         SortedMap<String, String> map = trie.prefixMap("Al");
-        TestCase.assertEquals(8, map.size());
+        assertEquals(8, map.size());
         Iterator<String> iter = map.keySet().iterator();
-        TestCase.assertEquals("Alabama", iter.next());
-        TestCase.assertEquals("Albert", iter.next());
-        TestCase.assertEquals("Alberto", iter.next());
-        TestCase.assertEquals("Albertoo", iter.next());
-        TestCase.assertEquals("Alberts", iter.next());
-        TestCase.assertEquals("Alien", iter.next());
+        assertEquals("Alabama", iter.next());
+        assertEquals("Albert", iter.next());
+        assertEquals("Alberto", iter.next());
+        assertEquals("Albertoo", iter.next());
+        assertEquals("Alberts", iter.next());
+        assertEquals("Alien", iter.next());
         iter.remove();
-        TestCase.assertEquals(7, map.size());
-        TestCase.assertEquals("Allie", iter.next());
-        TestCase.assertEquals("Alliese", iter.next());
-        TestCase.assertFalse(iter.hasNext());
+        assertEquals(7, map.size());
+        assertEquals("Allie", iter.next());
+        assertEquals("Alliese", iter.next());
+        assertFalse(iter.hasNext());
         
         map = trie.prefixMap("Ak");
-        TestCase.assertEquals(2, map.size());
+        assertEquals(2, map.size());
         iter = map.keySet().iterator();
-        TestCase.assertEquals("Akka", iter.next());
+        assertEquals("Akka", iter.next());
         iter.remove();
-        TestCase.assertEquals(1, map.size());
-        TestCase.assertEquals("Akko", iter.next());
+        assertEquals(1, map.size());
+        assertEquals("Akko", iter.next());
         if(iter.hasNext())
-            TestCase.fail("shouldn't have next (but was: " + iter.next() + ")");
-        TestCase.assertFalse(iter.hasNext());
+            fail("shouldn't have next (but was: " + iter.next() + ")");
+        assertFalse(iter.hasNext());
     }
 
     @Test
@@ -945,13 +946,13 @@ public class PatriciaTrieTest {
             }
         });
         
-        TestCase.assertEquals(1, strings.size());
+        assertEquals(1, strings.size());
         
         strings.clear();
         for (String s : trie.values()) {
             strings.add(s);
         }
-        TestCase.assertEquals(1, strings.size());
+        assertEquals(1, strings.size());
     }
     
     @Test
@@ -969,7 +970,7 @@ public class PatriciaTrieTest {
                 return Decision.CONTINUE;
             }
         });
-        TestCase.assertEquals(1, strings.size());
+        assertEquals(1, strings.size());
     }
     
     private static class TestCursor implements Cursor<Object, Object> {
@@ -1009,17 +1010,17 @@ public class PatriciaTrieTest {
         }
         
         public void checkKey(Object k) {
-            TestCase.assertEquals(keys.get(index++), k);
+            assertEquals(keys.get(index++), k);
         }
         
         public void checkValue(Object o) {
-            TestCase.assertEquals(values.get(index++), o);
+            assertEquals(values.get(index++), o);
         }
 
         public Decision select(Entry<?, ?> entry) {
           //  System.out.println("Scanning: " + entry.getKey());
-            TestCase.assertEquals(keys.get(index), entry.getKey());
-            TestCase.assertEquals(values.get(index), entry.getValue());
+            assertEquals(keys.get(index), entry.getKey());
+            assertEquals(values.get(index), entry.getValue());
             index++;
             
             if(toRemove.contains(entry.getKey())) {
@@ -1038,11 +1039,11 @@ public class PatriciaTrieTest {
         }
         
         void finished() {
-            TestCase.assertEquals(keys.size(), index);
+            assertEquals(keys.size(), index);
         }
     }
     
     private static void assertEqualArrays(Object[] a, Object[] b) {
-        TestCase.assertTrue(Arrays.equals(a, b));
+        assertTrue(Arrays.equals(a, b));
     }
 }
